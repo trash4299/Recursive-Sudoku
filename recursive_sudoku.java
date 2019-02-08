@@ -1,12 +1,11 @@
+class Solver {
+    private Square[][] enter;
 
-see if i can display values in jtable as they fill
+    public static void main(String[] args) {
+        new Solver();
+    }
 
-
-solver () {
-	
-	int x = 0;
-	int y = 0;
-	
+    private Solver() {
         enter = new Square[9][9];
         for (int x=0;x<9;x++) {
             for(int p=0;p<9;p++) {
@@ -14,64 +13,73 @@ solver () {
             }
         }
         enter = inputGui();
-	recursion(0,0);
-        solutionGui(enter);
-}
+        new TableGui(solvin());
+    }
 
-recursion void (int x, int y) {
-	if(!enter[x][y].final) {
-		for(int trying=0;trying<9;trying++) {
-			System.println("Trying "+trying+"at ("+x+","+y+").   ");
-			if(colcheck(x,trying)&&rowcheck(y,trying)&&squarecheck(x,y,trying)) {
-				enter[x][y] = trying;
-				break;
-			}
-		}	
-	}
-	
-	if(x==8&&y==8) {
-		return;
-	}
-	else if(y==8) {
-		if(solver(x+1,0));
-	}
-	else {	  // y<8
-		solver(x,y+1);
-	}
-}
+    private Square [][] inputGui() {
+        TableGui beginning = new TableGui();
+        return beginning.give();
+    }
 
-colcheck boolean(int ex, int maybe) {
-	for(int r=0;r<9:r++) {
-		if(enter[ex][r].final&&enter[ex][r].final == maybe) {
-			System.print("Found another "+maybe+" in the column.");
-			return false;
-		}
-	}
-	return true;
-}
+    private Square[][] solvin(){
+        recursion(0,0);
+        return enter;
+    }
 
-rowcheck boolean(int why, int maybe) {
-	for(int r=0;r<9:r++) {
-		if(enter[r][why].final&&enter[r][why].final == maybe) {
-			System.print("Found another "+maybe+" in the row.");
-			return false;
-		}
-	}
-	return true;
-}
+    private void recursion  (int x, int y) {
+        if(!enter[x][y].fin) {
+            for(int trying=0;trying<9;trying++) {
+                System.out.println("\nTrying "+(trying+1)+" at ("+x+","+y+").   ");
+                if(colcheck(x,trying+1)&&rowcheck(y,trying+1)&&squarecheck(x,y,trying+1)) {
+                    enter[x][y].finnum = trying+1;
+                    break;
+                }
+            }
+        }
+        if(x==8&&y==8) {
+            return;
+        }
+        else if(y==8) {
+            recursion(x+1,0);
+        }
+        else {
+            recursion(x,y+1);
+        }
+    }
 
-squarecheck boolean(int ex, int why, int maybe) {
-	int a = ex/3;
-	int b = why/3;
-		
-	for(int r=(3*a);r<(3*a+2);r++) {
-		for(int s=(3*b);s<(3*b+2);s++) {
-			if(enter[r][s].final&&enter[r][s].final == maybe) {
-				System.print("Found another "+maybe+" in the square.");
-				return false;
-			}
-		}
-	}
-	return true;
-}
+    private boolean colcheck (int ex, int maybe) {
+        for(int r=0;r<9;r++) {
+            if(enter[ex][r].fin&&enter[ex][r].finnum == maybe) {
+                System.out.print("Found another "+maybe+" in the column.");
+                return false;
+            }
+        }
+        return true;
+    }
 
+    private boolean rowcheck (int why, int maybe) {
+        for(int r=0;r<9;r++) {
+            if(enter[r][why].fin&&enter[r][why].finnum == maybe) {
+                System.out.print("Found another "+maybe+" in the row.");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean squarecheck(int ex, int why, int maybe) {
+        int a = ex/3;
+        int b = why/3;
+
+        for(int r=(3*a);r<(3*a+2);r++) {
+            for(int s=(3*b);s<(3*b+2);s++) {
+                if(enter[r][s].fin&&enter[r][s].finnum == maybe) {
+                    System.out.print("Found another "+maybe+" in the square.");
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+}
