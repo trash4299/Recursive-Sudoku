@@ -1,6 +1,7 @@
 class Solver {
     private Square[][] enter;
-
+    private boolean done;
+    
     public static void main(String[] args) {
         new Solver();
     }
@@ -12,8 +13,10 @@ class Solver {
                 enter[x][p]= new Square();
             }
         }
+        done = false;
         enter = inputGui();
-        new TableGui(solvin());
+        recursion(0,0);
+        new TableGui(enter);
     }
 
     private Square [][] inputGui() {
@@ -21,30 +24,31 @@ class Solver {
         return beginning.give();
     }
 
-    private Square[][] solvin(){
-        recursion(0,0);
-        return enter;
-    }
-
     private void recursion  (int x, int y) {
-        if(!enter[x][y].fin) {
+        if(!done&&!enter[x][y].fin) {
             for(int trying=0;trying<9;trying++) {
                 System.out.println("\nTrying "+(trying+1)+" at ("+x+","+y+").   ");
                 if(colcheck(x,trying+1)&&rowcheck(y,trying+1)&&squarecheck(x,y,trying+1)) {
                     enter[x][y].finnum = trying+1;
+                if(x==8&&y==8) {
+                    done = true;
+                    return;
+                }
+                else if(y==8)
+                    recursion(x+1,0);
+                else
+                    recursion(x,y+1);
+                if(done)
                     break;
                 }
             }
         }
-        if(x==8&&y==8) {
+        if(done)
             return;
-        }
-        else if(y==8) {
+        else if(x!=8&&y==8)
             recursion(x+1,0);
-        }
-        else {
+        else   //x < 8 and y < 8
             recursion(x,y+1);
-        }
     }
 
     private boolean colcheck (int ex, int maybe) {
