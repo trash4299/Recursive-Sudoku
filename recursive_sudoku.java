@@ -41,7 +41,7 @@ class Solver {
         TableGui beginning = new TableGui();
         return beginning.give();
     }
-
+    
     private void recursion  (int x, int y) {
         if(!done&&!enter[x][y].fin) {
             for(int trying=0;trying<9;trying++) {
@@ -54,12 +54,14 @@ class Solver {
                         recursion(x+1,0);
                     else
                         recursion(x,y+1);
+		    
                     if(done)
                         break;
+		    enter[x][y].finnum = 0;
                 }
             }
         }
-        if(enter[x][y].fin&&x==8&&y==8)
+        if((done||enter[x][y].fin)&&x==8&&y==8)
             return;
         else if(x!=8&&y==8)
             recursion(x+1,0);
