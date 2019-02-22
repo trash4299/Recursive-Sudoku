@@ -48,7 +48,7 @@ class Solver {
     private void recursion  (int x, int y) {
         if(!enter[x][y].fin) {
             for(int trying=0;trying<9;trying++) {
-                System.out.print("Trying "+(trying+1)+" at ("+(x+1)+","+(y+1)+"). ");
+                System.out.print("\nTrying "+(trying+1)+" at ("+(x+1)+","+(y+1)+"). ");
                 if(check(x,y,trying+1)) {
                     enter[x][y].finnum = trying+1;
                     if(x==8&&y==8) {
@@ -82,21 +82,21 @@ class Solver {
         int b = why/3;
 
         for(int r=0;r<9;r++) {
-            if(r!=y&&enter[ex][r].finnum == maybe) {
-                System.out.println("Found another "+maybe+" in the row at ("+(ex+1)+","+(r+1)+").");
+            if(enter[ex][r].finnum == maybe) {
+                System.out.print("Found another "+maybe+" in the row at ("+(ex+1)+","+(r+1)+").");
                 return false;
             }
         }
         for(int r=0;r<9;r++) {
-            if(r!=x&&enter[r][why].finnum == maybe) {
-                System.out.println("Found another "+maybe+" in the column at("+(r+1)+","+(why+1)+").");
+            if(enter[r][why].finnum == maybe) {
+                System.out.print("Found another "+maybe+" in the column at("+(r+1)+","+(why+1)+").");
                 return false;
             }
         }
         for(int r=(3*a);r<(3*a+3);r++) {
             for(int s=(3*b);s<(3*b+3);s++) {
-                if(!(a==ex&&b==why)&&enter[r][s].finnum == maybe) {
-                    System.out.println("Found another "+maybe+" in the square at ("+(r+1)+","+(s+1)+").");
+                if(enter[r][s].finnum == maybe) {
+                    System.out.print("Found another "+maybe+" in the square at ("+(r+1)+","+(s+1)+").");
                     return false;
                 }
             }
